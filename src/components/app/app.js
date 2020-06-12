@@ -1,39 +1,43 @@
-import React from "react";
+import React, {useState} from "react";
 import AppHeader from "../app-header";
 import SearchPanel from "../search-panel";
 import ItemStatusFilter from "../item-status-filter";
 import TodoList from "../todo-list";
+import {connect} from "react-redux";
+import TodoListAdd from "../todo-list-add";
 
-const App = () => {
+const App = ({todoData}) => {
 
-  const todoData = [
-    {
-      label: 'Drink Coffee',
-      important: false,
-      id: 1
-    },
-    {
-      label: 'Make Awesome App',
-      important: true,
-      id: 2
-    },
-    {
-      label: 'Have a lunch',
-      important: false,
-      id: 3
-    }
-  ];
+  const [filters, setFilters] = useState(null);
+
+  const [searchValue, setSearch] = useState('');
 
   return (
     <div className="todo-app">
-      <AppHeader toDo={1} done={3}/>
+      <AppHeader todos={todoData}/>
       <div className="top-panel d-flex">
-        <SearchPanel/>
-        <ItemStatusFilter/>
+        <SearchPanel
+          setSearch = {setSearch}
+        />
+        <ItemStatusFilter
+          filters={filters}
+          setFilters={setFilters}
+        />
       </div>
-      <TodoList todos={todoData}/>
+      <TodoList
+        filters={filters}
+        searchValue={searchValue}
+        todos={todoData}
+      />
+      <TodoListAdd/>
     </div>
   )
 }
 
-export default App;
+const mapToState = state => ({
+  todoData: state.todos
+})
+
+export default connect(
+  mapToState,
+)(App);

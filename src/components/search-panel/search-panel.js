@@ -1,11 +1,18 @@
 import React from "react";
 import './search-panel.css';
 
-const SearchPanel = () => {
+const SearchPanel = ({setSearch}) => {
+
+  const onInputChange = (event) => {
+    setSearch(event.target.value);
+  }
+
   return (
     <input type="text"
            className="form-control search-input"
-           placeholder="type to search" />
+           placeholder="Search todo..."
+            onChange={(event)=>onInputChange(event)}
+    />
   );
 };
 
