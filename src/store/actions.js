@@ -28,12 +28,10 @@ export const CHANGE_IMPORTANT_STATE = todo => dispatch => {
   })
 }
 
-export const EDIT_TODO = todo => dispatch => {
-  const {id, ...otherData} = todo;
-
+export const EDIT_TODO = data => dispatch => {
   dispatch({
-    type: "EDIT_TODO",
-    id: todo.id,
-    dataToChange: otherData
+    type: 'EDIT_TODO',
+    id: data.id,
+    label: data.label
   })
 }

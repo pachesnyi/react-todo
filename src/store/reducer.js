@@ -39,24 +39,24 @@ const reducers = (state = initialState, action) => {
     case "CHANGE_DONE_STATE":
       return {
         ...state,
-        todos: state.todos.map( todo => todo.id === action.id ? {...todo, done: action.done} : todo )
+        todos: state.todos.map(todo => todo.id === action.id ? {...todo, done: action.done} : todo)
       }
 
     case "CHANGE_IMPORTANT_STATE":
       return {
         ...state,
-        todos: state.todos.map( todo => todo.id === action.id ? {...todo, important: action.important} : todo )
+        todos: state.todos.map(todo => todo.id === action.id ? {...todo, important: action.important} : todo)
       }
 
     case "EDIT_TODO":
       return {
         ...state,
-        todos: [
-          ...state.todos.filter(item => item.id !== action.id),
-          {
-            ...state.todos.find(todo => todo.id === action.id),
-            ...action.dataToChange
-          }]
+        todos: state.todos.reduce((acc, item) => {
+          if (item.id === action.id)
+            item.label = action.label
+          acc.push(item)
+          return acc
+        }, [])
       };
 
     default:
